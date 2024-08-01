@@ -62,7 +62,7 @@ class StanzaBulkTokenizer(Tokenizer):
         last_bulk = pd_dataset[num_bulks * bulksize:][self.text_column]
         if len(last_bulk) > 0:
             tokenized_last_bulk = self.tokenize_one_bulk(last_bulk)
-            pd_dataset.iloc[num_bulks * bulksize:, pd_dataset.columns.get_loc(self.tokenized_text_column)] = tokenized_last_bulk
+            # pd_dataset.iloc[num_bulks * bulksize:, pd_dataset.columns.get_loc(self.tokenized_text_column)] = tokenized_last_bulk
             tok_text.extend(tokenized_last_bulk)
 
         pd_dataset[self.tokenized_text_column] = tok_text
