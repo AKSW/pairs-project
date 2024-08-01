@@ -27,7 +27,7 @@ def get_articles_content(news_article_df, para_length=3):
     print('total articles with failure count', count)
 
     # when the content is not available, then put the title as content
-    news_article_df['text'] = news_article_df['text'].apply(lambda x: x if x != '' else news_article_df['title'])
+    news_article_df['text'] = news_article_df['text'].replace('', pd.NA).fillna(news_article_df['title'])
 
     return news_article_df
 
