@@ -66,7 +66,7 @@
 
 
         <div class="container">
-
+            
             <div id="statements">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -150,50 +150,23 @@
 
                     {% comment %} NEXT TAB {% endcomment %}
                     <div class="tab-pane fade" id="newspaper-forcast" role="tabpanel" aria-labelledby="newspaper-forcast-tab" style="width: 100%;">
-                            <div class="row" style="position:relative;top:20px; margin-bottom:30px;display: flex;justify-content: center;">
+							<div class="row" style="position:relative;top:20px; margin-bottom:30px;display: flex;justify-content: center;">
+								<form method="post" action="{% url 'home' %}">
+									{% csrf_token %}
+									{{ form.as_p }}
+									<input type="submit" value="Submit">
+								</form>
 
-                                <div class="col-2">
-                                        <input placeholder="Domain Specific Keyword" type="text" name="domain-specific-keyword" id="domain-specific-keyword" style="width: 220px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; background-color: #f5f5f5;"/>
-                                </div>
+								{% if output_data %}
+								<div>
+									Output: {{ output_data }}
+								</div>
+								{% endif %}
 
-                                <div class="col-2">
-                                    <input placeholder="Specific Alert Keyword" type="text" name="specific-alert-keyword" id="specific-alert-keyword" style="width: 220px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; background-color: #f5f5f5;"/>
-                                </div>
-
-                                <div class="col-2">
-
-                                    <input type="text" id="country" />
-                                    <input type="hidden" id="country_code" />
-                                
-                                <script>
-                                    $("#country").countrySelect({
-                                        defaultCountry: "de",
-                                    });
-                                </script>
-
-                                </div>
-
-                                <div class="col-2">
-
-                                    <label for="start-period">
-                                        Start Date:
-                                    </label>
-                                    <input id="start-period" type="date" name="begin" placeholder="dd-mm-yyyy" value="">
-                                </div>
-
-                                <div class="col-2">
-                                    <label for="end-period">
-                                        End Date:
-                                    </label>
-                                    <input id="end-period" type="date" name="end" placeholder="dd-mm-yyyy" value="">
-                                </div>
-
-                                <div class="col">
-                                    <button  id="generate_btn"  onclick="trendAnalysis(event)">Submit</button>
-                                </div>
-                                
-                            </div>
-
+								<div class="col">
+									<button id="generate_btn" onclick="trendAnalysis(event)">Generate Trends</button>
+								</div>
+						</div>
                         <div class="row">
                             <div class="col-6">
                                 <div  style="border: 1px solid #000; border-radius: 5px; height:480px; width: 96%; margin-top: 20px;">
@@ -224,73 +197,9 @@
                                         <img id="plot_alarm_system" alt="plot_alarm_system" style="width: 52%; margin: 10px auto; display: block;" src="data:image/png;base64,{{ plot_alarm_system }}">
                                         {% comment %} <img src="{% static 'img/chart.jpg' %}" alt="chart" style="width: 32%; margin: 10px auto; display: block;"> {% endcomment %}
                                 
-                                        <p id="number-field6" style="text-align:center;"><strong>Most Influential Newsarticle:</strong> <a href="https://example.com/">Energiepreisschock 2023 - Preisvergleich wichtiger denn je!</a>, High Alert Score: 78.3%</p>
+                                        <p id="number-field6" style="text-align:center;"><strong>Most Influential Newsarticle:</strong> <a href="https://example.com/">{{model_response.alerts.first_article}}</a>, {{model_response.alerts.first_score}}%</p>
 
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div  style="border: 1px solid #000;border-radius: 5px; height: 480px;width: 100%;margin-top: 20px;">
-                                    
-                                    <div id="title-qa-chat-bot">Q&amp;A Chat Bot</div>
-
-                                    <p class="warning_text" style="text-align: center;margin-top:30px;">
-                                        Please select Keywords, Country and Time Period.
-                                    </p>
-
-                                    <div id="qa_chat_bot" style="display: none;">
-                                    
-                                        <div style="text-align: center;">
-                                            <label for="ask-q">Ask your question:</label>
-                                            <input placeholder="Your Question" type="text" name="ask-q" id="ask-q" style="width: 503px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; background-color: #f5f5f5;"/>
-                                        
-                                            <button  id="ask-q-btn"  onclick="qaChatBotAsk()">Submit</button>
-                                        </div>
-                                    </div>
-                                    
-                                    <div id="qa_chat_bot_asked" style="display: none;">
-
-                                        <table style="width: 97%; height: 100%; margin: 15px auto; border: none;">
-
-                                            <tr>
-                                                <th style="width:12%;">Response</th>
-                                                <td>{{model_response.response}} - Confidence Score: {{model_response.score}}%</td>
-                                            </tr>
-
-                                            <tr>
-                                                <th>Response In Context:</th>
-                                                <td>Experte warnt vor Energie Krise wir brauchen das Erdgas aus Russland 
-                                                    <span style="color:red;">Drastischer Preisanstieg bei Heiz und Spritpreisen wegen des Ukraine Krieges</span> der Freistaat befindet
-                                                     sich in einer Energiekrise Wie geht es für Firmen und Bürger weiter Experten warnen dass es zu Versorgungsengpässen und Problemen bei der Produktion von verschiedenen 
-                                                     Produkten Wir brauchen das Erdgas aus Russland sagt Manfred Gössl IHK Hauptgeschäftsführer in München und Oberbayern</td>
-                                            </tr>
-                                        
-                                        </table>
-                                    
-                                    </div>
-                                    
-                                    <div id="loadingOverlay-2" style="display:none;">
-                                        <img src="{% static 'img/loading.gif' %}" alt="Loading GIF">
-                                    </div>
-                                
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-6">
-                                <div  style="border: 1px solid #000;border-radius: 5px; height: 480px;width: 96%;margin-top: 20px;">
-                                    <div id="title-stat-trend-analysis">Statistical Trend Analysis</div>
-
-                                    <p class="warning_text" style="text-align: center;margin-top:30px;">
-                                        Please select Keywords, Country and Time Period.
-                                    </p>
-
-                                    <div id="stat_trend_analysis" style="display: none;">
-                                        <img id="plot_alarm_system" alt="plot_alarm_system" style="width: 82%; margin: 10px auto; display: block;" src="data:image/png;base64,{{ plot_statistical_trend_analysis }}">
-                                    </div>
-
                                 </div>
                             </div>
                             <div class="col-6">
@@ -333,6 +242,15 @@
                     </div>
                 </div>
             </div>
+			{% if messages %}
+				<div id="flash-message" class="alert alert-success">
+					<ul class="messages">
+						{% for message in messages %}
+							<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
         </div>
 
         <div id="loadingOverlay" style="display:none;">

@@ -1,24 +1,37 @@
-import openai
+from openai import OpenAI
 import re
-
+#%%
 # Set up the API key
-openai.api_key = "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"
-
+#openai.api_key = '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'
 # Define the prompt to generate text completion
 prompt = "Energy Crisis"
-
-# Generate text completion for the prompt
-completions = openai.Completion.create(
-    engine="text-davinci-002",
-    prompt=prompt,
-    max_tokens=1024,
-    n=1,
-    stop=None,
-    temperature=0.5,
+#%%
+client = OpenAI(
+    # defaults to os.environ.get("OPENAI_API_KEY")
+    api_key='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',
 )
 
+response = client.chat.completions.create(
+  model="gpt-3.5-turbo",
+  messages=[
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": prompt}
+  ],
+  n=1,
+  max_tokens=256,
+  temperature=0.5,
+)
+#%%
+
+if user_language == 'German':
+    with open('german_stopwords_full.txt', 'r') as f:
+        german_stopwords = set(f.read().splitlines())
+    stop_words = german_stopwords
+
+
+#%%
 # Extract the generated text
-generated_text = completions.choices[0].text
+generated_text = response.choices[0].message.content
 
 # Split the generated text into words
 words = re.findall(r'\w+', generated_text)

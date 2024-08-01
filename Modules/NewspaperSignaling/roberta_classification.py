@@ -4,9 +4,9 @@ import logging as log
 log.basicConfig(level=log.DEBUG)
 
 # loading roberta model
-# classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
 # classifier = pipeline("zero-shot-classification", model="Sahajtomar/German_Zeroshot")
-classifier = pipeline("zero-shot-classification", model="joeddav/xlm-roberta-large-xnli", device=0)
+#classifier = pipeline("zero-shot-classification", model="joeddav/xlm-roberta-large-xnli", device=0)
 
 
 # category_labels = ['Produkt', 'Service', 'Unternehmerische', 'Verantwortung', 'Alleinstellungsmerkmale',
@@ -58,7 +58,7 @@ class RobertaClassification:
         # top3_scores = bmc_classification['scores'][0:3]
         # log.debug(f'BMC scores: {top3_scores}')
 
-        return top3_category_ids
+        #return top3_category_ids
 
 if __name__ == '__main__':
     # dummy sentence test

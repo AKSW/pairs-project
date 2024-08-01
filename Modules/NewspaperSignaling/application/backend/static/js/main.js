@@ -59,3 +59,13 @@ function qaChatBotAsk(){
     }, timeoutMilliseconds);
 
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Automatically close the flash message after 2-3 seconds (2000-3000 milliseconds)
+    setTimeout(function() {
+        var flashMessage = document.getElementById("flash-message");
+        if (flashMessage) {
+            flashMessage.style.display = "none"; // Hide the flash message
+        }
+    }, 100); // Adjust the timeout as needed (e.g., 3000 for 3 seconds)
+});
