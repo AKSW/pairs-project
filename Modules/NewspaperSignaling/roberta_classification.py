@@ -64,4 +64,4 @@ if __name__ == '__main__':
     # dummy sentence test
     sequence_to_classify = "Das Licht ist sehr angenehm und nicht zu kalt. Mich hat überrascht, dass das Licht doch sehr gut gestreut wird. Die alte, stromfressende Glühbirne vermisse ich also nicht!"
     obj = RobertaClassification()
-    obj.mapping_reviews_bmc(sequence_to_classify, sequence_to_classify, threshold=0.85)
+    obj.roberta_classifier(sequence_to_classify, sequence_to_classify, threshold=0.85)

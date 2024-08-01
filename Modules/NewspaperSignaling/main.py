@@ -44,7 +44,7 @@ def keyword_filter(news_article_df, main_keyword):
 
     # loop over dataframe and classify each row
     for index, row in news_article_df.iterrows():
-        confidence_scores = roberta_obj.roberta_classifier(row[text_column], categories_to_clasify, threshold, text_column)
+        confidence_scores = roberta_obj.roberta_classifier(row[text_column], categories_to_clasify, threshold)
         if confidence_scores[main_keyword] < threshold:
             news_article_df.drop(index, inplace=True)
 
@@ -57,7 +57,7 @@ def tense_filter(news_article_df):
 
     # loop over dataframe and classify each row
     for index, row in news_article_df.iterrows():
-        confidence_scores = roberta_obj.roberta_classifier(row[text_column], categories_to_clasify, threshold, text_column)
+        confidence_scores = roberta_obj.roberta_classifier(row[text_column], categories_to_clasify, threshold)
         if (confidence_scores['present'] + confidence_scores['future']) < threshold:
             news_article_df.drop(index, inplace=True)
 
@@ -70,7 +70,7 @@ def alert_keyword_filter(news_article_df, alert_keyword):
 
     # loop over dataframe and classify each row
     for index, row in news_article_df.iterrows():
-        confidence_scores = roberta_obj.roberta_classifier(row[text_column], categories_to_clasify, threshold, text_column)
+        confidence_scores = roberta_obj.roberta_classifier(row[text_column], categories_to_clasify, threshold)
         if confidence_scores[alert_keyword] < threshold:
             news_article_df.drop(index, inplace=True)
 
@@ -84,7 +84,7 @@ def alert_level_filter(news_article_df):
 
     # loop over dataframe and classify each row
     for index, row in news_article_df.iterrows():
-        confidence_scores = roberta_obj.roberta_classifier(row[text_column], categories_to_clasify, threshold, text_column)
+        confidence_scores = roberta_obj.roberta_classifier(row[text_column], categories_to_clasify, threshold)
 
         # find the key with the highest value
         alert_class = max(confidence_scores, key=confidence_scores.get)
