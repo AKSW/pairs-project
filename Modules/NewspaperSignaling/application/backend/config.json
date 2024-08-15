@@ -1,0 +1,9 @@
+{
+    "BERT_MODEL": "MoritzLaurer/deberta-v3-large-zeroshot-v2.0",
+    "CLASS_NAMES": [
+        "negative",
+        "neutral",
+        "positive"
+    ],
+    "MAX_SEQUENCE_LEN": 160
+}
