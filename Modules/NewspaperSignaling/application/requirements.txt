@@ -12,3 +12,11 @@ requests
 joblib
 geopy
 scikit-learn
+
+openai
+dateparser==1.2.0
+feedparser==6.0.10
+bs4
+transformers
+torch
+fastapi[standard]
