@@ -10,12 +10,14 @@ from .news_articles_paragraph import get_articles_content
 #from tok_lem_pipeline import tokenize_whole_maude
 #%%
 from .roberta_classification import RobertaClassification
-roberta_obj = RobertaClassification()
+from .bge_classification import BgeClassification
+roberta_obj = BgeClassification()
 #%%
 
-def analyze_news_articles(query, start_date, end_date, country, language, openai_api_key):
+def analyze_news_articles(query, start_date, end_date, country, language):
     news = get_news(query, start_date, end_date, country, language)
     news_df = pd.DataFrame(news)
+    news_df = news_df.head(5)
     
     
     news_article_df = get_articles_content(news_df, para_length=1)
@@ -166,7 +168,7 @@ def alert_classification(news_article_df):
 
 def full_pipeline(query, start_date, end_date, country, language):
     # Step 1: Get News Articles
-    news_articles_df = analyze_news_articles(query, start_date, end_date, country, language, openai_api_key)
+    news_articles_df = analyze_news_articles(query, start_date, end_date, country, language)
 
     # Step 2: Chat Completion
     #generated_text = chat_completion(query, news_articles_df, openai_api_key)
